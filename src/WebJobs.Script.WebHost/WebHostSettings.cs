@@ -68,21 +68,8 @@ namespace Microsoft.Azure.WebJobs.Script.WebHost
             {
                 throw new InvalidOperationException("Unable to determine function script root directory.");
             }
-            else if (FileSystemHelpers.FileExists(Path.Combine(settings.ScriptPath, "local.settings.json")))
-            {
-                var obj = JsonConvert.DeserializeObject<LocalSettingsJson>(File.ReadAllText(Path.Combine(settings.ScriptPath, "local.settings.json")));
-                foreach (var pair in obj.Values)
-                {
-                    Environment.SetEnvironmentVariable(pair.Key, pair.Value);
-                }
-            }
 
             return settings;
         }
-    }
-
-    internal class LocalSettingsJson
-    {
-        public Dictionary<string, string> Values { get; set; } = new Dictionary<string, string>();
     }
 }
